@@ -70,7 +70,10 @@ function App() {
     useReducer(reducer, initialState);
 
   const numQuestions = questions.length;
-  const maxPoints = questions.reduce((prev, cur) => prev + cur.points, 0);
+  const maxPoints = questions.length > 0 
+  ? questions.reduce((prev, cur) => prev + (cur.points || 0), 0)
+  : 0;
+
 
   useEffect(function () {
     async function fetchQuestions() {
