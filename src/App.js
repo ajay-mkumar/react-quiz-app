@@ -76,7 +76,7 @@ function App() {
     async function fetchQuestions() {
       try {
         dispatch({ type: "dataLoading" });
-        const response = await fetch(`http://localhost:8000/questions`);
+        const response = await fetch(`https://react-quizzy-app.netlify.app/questions.json`);
 
         if (!response.ok) throw new Error("Something went wrong");
 
