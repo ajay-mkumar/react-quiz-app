@@ -27,11 +27,15 @@ function reducer(state, action) {
     case "dataLoading":
       return { ...state, status: "loading" };
     case "dataReceived":
-      return { ...state, questions: action.payload, status: "ready"  };
+      return { ...state, questions: action.payload, status: "ready" };
     case "dataFailed":
       return { ...state, status: "error" };
     case "quizActive":
-      return { ...state, status: "active", secondsRemaining: state.questions.length * SECS_PER_QUES };
+      return {
+        ...state,
+        status: "active",
+        secondsRemaining: state.questions.length * SECS_PER_QUES,
+      };
     case "newAnswer":
       const question = state.questions.at(state.index);
 
@@ -66,26 +70,30 @@ function reducer(state, action) {
 }
 
 function App() {
-  const [{ questions, status, index, answer, points, highScore, secondsRemaining }, dispatch] =
-    useReducer(reducer, initialState);
+  const [
+    { questions, status, index, answer, points, highScore, secondsRemaining },
+    dispatch,
+  ] = useReducer(reducer, initialState);
 
   const numQuestions = questions.length;
-  const maxPoints = questions.length > 0 
-  ? questions.reduce((prev, cur) => prev + (cur.points || 0), 0)
-  : 0;
-
+  const maxPoints =
+    questions.length > 0
+      ? questions.reduce((prev, cur) => prev + (cur.points || 0), 0)
+      : 0;
 
   useEffect(function () {
     async function fetchQuestions() {
       try {
         dispatch({ type: "dataLoading" });
-        const response = await fetch(`https://react-quizzy-app.netlify.app/questions.json`);
+        const response = await fetch(
+          `https://react-quizzy-app.netlify.app/questions.json`
+        );
 
         if (!response.ok) throw new Error("Something went wrong");
 
         const data = await response.json();
 
-        dispatch({ type: "dataReceived", payload: data });
+        dispatch({ type: "dataReceived", payload: data.questions });
       } catch (err) {
         console.log(err);
         dispatch({ type: "dataFailed" });
@@ -94,6 +102,7 @@ function App() {
 
     fetchQuestions();
   }, []);
+
   return (
     <div className="app">
       <Header />

@@ -1,9 +1,6 @@
-import Loader from "./Loader";
 import Options from "./Options";
 
-function Question({question, dispatch, answer}) {
-
-  if (!question) return <Loader />;
+function Question({ question, dispatch, answer }) {
   return (
     <div>
       <h2>{question.question}</h2>
