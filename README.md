@@ -50,7 +50,7 @@ Visually shows how much of the quiz is completed, enhancing user experience.
 
 🖥️ How to Run Locally
 Clone the repository:
-git clone https://github.com/your-username/react-quiz-app.git
+git clone https://github.com/ajay-mkumar/react-quiz-app
 cd react-quiz-app
 
 Install dependencies:
